@@ -1,0 +1,130 @@
+[
+  {
+    "RetornoOperacao": "01 - Operação Realizada com Sucesso.",
+    "ContratoID": 19223,
+    "ContratoAulaLivreID": 0,
+    "SituacaoID": 1,
+    "Situacao": "Vigente",
+    "Aluno": "FRANCISCA MAISA CARNEIRO LIMA",
+    "AlunoID": 17025,
+    "CursoID": "63",
+    "TurmaID": 778,
+    "NomeTurma": "CE02-51822-488365",
+    "NomeCurso": "Livre Formação em Claude Expert 2.6",
+    "TipoContratoID": -1,
+    "DataInicio": "14/01/2027",
+    "DataTermino": "13/01/2028",
+    "DataMatricula": "19/09/2026",
+    "Tipo": 1,
+    "Contratante": "FRANCISCA MAISA CARNEIRO LIMA",
+    "NomeMatrizCurricular": "LF em Claude Expert 2026.1",
+    "FinanceiroLancado": "SIM",
+    "NumeroContrato": "1505/1",
+    "DataEncerramento": null,
+    "Disciplinas": {
+      "wsDisciplinas": [
+        {
+          "DisciplinaID": 465,
+          "Nome": "CE M1 U1 - Introdução à IA Generativa",
+          "Modulo": 1
+        },
+        {
+          "DisciplinaID": 466,
+          "Nome": "CE M1 U2 - Fundamentos do Claude",
+          "Modulo": 1
+        },
+        {
+          "DisciplinaID": 467,
+          "Nome": "CE M1 U3 - Prompt Engineering Essencial",
+          "Modulo": 1
+        },
+        {
+          "DisciplinaID": 468,
+          "Nome": "CE M1 U4 - Claude para Produtividade",
+          "Modulo": 1
+        },
+        {
+          "DisciplinaID": 469,
+          "Nome": "CE M1 U5 - IA Aplicada ao Trabalho",
+          "Modulo": 1
+        },
+        {
+          "DisciplinaID": 470,
+          "Nome": "CE M2 U1 - Engenharia de Contexto",
+          "Modulo": 2
+        },
+        {
+          "DisciplinaID": 471,
+          "Nome": "CE M2 U2 - Claude para Negócios",
+          "Modulo": 2
+        },
+        {
+          "DisciplinaID": 472,
+          "Nome": "CE M2 U3 - Consultoria Assistida por IA",
+          "Modulo": 2
+        },
+        {
+          "DisciplinaID": 473,
+          "Nome": "CE M2 U4 - Knowledge Systems",
+          "Modulo": 2
+        },
+        {
+          "DisciplinaID": 474,
+          "Nome": "CE M2 U5 - IA para Comunicação e Conteúdo",
+          "Modulo": 2
+        },
+        {
+          "DisciplinaID": 475,
+          "Nome": "CE M3 U1 - Vibe Coding",
+          "Modulo": 3
+        },
+        {
+          "DisciplinaID": 476,
+          "Nome": "CE M3 U2 - Produtos Digitais com IA",
+          "Modulo": 3
+        },
+        {
+          "DisciplinaID": 477,
+          "Nome": "CE M3 U3 - Agentes Inteligentes",
+          "Modulo": 3
+        },
+        {
+          "DisciplinaID": 478,
+          "Nome": "CE M3 U5 - Automação com IA",
+          "Modulo": 3
+        },
+        {
+          "DisciplinaID": 479,
+          "Nome": "CE M3 U6 - Stack Moderna para AI Builders",
+          "Modulo": 3
+        },
+        {
+          "DisciplinaID": 480,
+          "Nome": "CE M4 U1 - Governança de IA",
+          "Modulo": 4
+        },
+        {
+          "DisciplinaID": 481,
+          "Nome": "CE M3 U4 - MCP (Model Context Protocol)",
+          "Modulo": 3
+        },
+        {
+          "DisciplinaID": 483,
+          "Nome": "CE M4 U2 - Integração Corporativa",
+          "Modulo": 4
+        },
+        {
+          "DisciplinaID": 484,
+          "Nome": "CE M4 U3 - AI Transformation Strategy",
+          "Modulo": 4
+        },
+        {
+          "DisciplinaID": 485,
+          "Nome": "CE M4 U4 - Arquitetura Enterprise de IA",
+          "Modulo": 4
+        }
+      ]
+    },
+    "DisciplinasComTurma": null
+  }
+]

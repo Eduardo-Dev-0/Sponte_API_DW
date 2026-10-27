@@ -1,0 +1,525 @@
+[
+  {
+    "RetornoOperacao": "01 - Operação Realizada com Sucesso.",
+    "ModalidadesTurmas": {
+      "ModalidadeTurma": [
+        {
+          "ModalidadeID": 0,
+          "DescricaoModalidade": null,
+          "TurmaID": 304,
+          "NomeTurma": "Aulas diversas - Bezerra de Menezes"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 308,
+          "NomeTurma": "DA01-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 309,
+          "NomeTurma": "DA02-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 310,
+          "NomeTurma": "FS01-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 311,
+          "NomeTurma": "FS02-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 312,
+          "NomeTurma": "MD01-21822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 313,
+          "NomeTurma": "MD02-6812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 314,
+          "NomeTurma": "MD03-SAB1317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 325,
+          "NomeTurma": "MD04-51822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 328,
+          "NomeTurma": "MD05-2812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 334,
+          "NomeTurma": "DA03-21822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 335,
+          "NomeTurma": "FS03-51822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 336,
+          "NomeTurma": "MD06-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 345,
+          "NomeTurma": "FS04-3812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 347,
+          "NomeTurma": "FS05-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 348,
+          "NomeTurma": "FS06-SAB1317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 361,
+          "NomeTurma": "MD07-61822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 365,
+          "NomeTurma": "MD08-4812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 368,
+          "NomeTurma": "MD09-DOM812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 369,
+          "NomeTurma": "DA04-61822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 393,
+          "NomeTurma": "GT01-26812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 394,
+          "NomeTurma": "GT02-261317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 395,
+          "NomeTurma": "GT03-261317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 407,
+          "NomeTurma": "FS07-3812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 418,
+          "NomeTurma": "FS08-41317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 419,
+          "NomeTurma": "MD10-31317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 421,
+          "NomeTurma": "DA05-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 436,
+          "NomeTurma": "DA06-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 437,
+          "NomeTurma": "MD11-21822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 438,
+          "NomeTurma": "FSFlex09-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 450,
+          "NomeTurma": "DAFlex07-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 460,
+          "NomeTurma": "FS10-5812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 462,
+          "NomeTurma": "MD12-4812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 473,
+          "NomeTurma": "MD13-41317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 498,
+          "NomeTurma": "MD14-SAB1317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 499,
+          "NomeTurma": "FS11-51822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 502,
+          "NomeTurma": "DA08-21822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 503,
+          "NomeTurma": "FS13-6812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 505,
+          "NomeTurma": "FS14-DOM812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 506,
+          "NomeTurma": "FSFlex12-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 507,
+          "NomeTurma": "MD16-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 509,
+          "NomeTurma": "MD15-6812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 510,
+          "NomeTurma": "MDFlex17-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 530,
+          "NomeTurma": "IA01-51822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 544,
+          "NomeTurma": "IP01-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 559,
+          "NomeTurma": "GT3.0 - IAGEN04-24812-7488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 560,
+          "NomeTurma": "GT3.0 - IAGEN05-351317-7488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 561,
+          "NomeTurma": "GT3.0 - IASP04-241317-7488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 575,
+          "NomeTurma": "MD18-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 576,
+          "NomeTurma": "DA09-61822-488365 - Encerramento por atualização de matriz"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 577,
+          "NomeTurma": "DA10-SAB812-488365 - Encerrada por atualização da matriz curricular"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 584,
+          "NomeTurma": "MD19-2812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 588,
+          "NomeTurma": "FS15-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 608,
+          "NomeTurma": "UX-UI01-SAB1317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 622,
+          "NomeTurma": "DA10-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 623,
+          "NomeTurma": "DA09-61822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 626,
+          "NomeTurma": "MD20-4812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 627,
+          "NomeTurma": "FS16 -2812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 645,
+          "NomeTurma": "Encerrada por atualização de matrícula. IA02-61822-488365 -"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 648,
+          "NomeTurma": "DA11-DOM812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 649,
+          "NomeTurma": "MD21-51822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 670,
+          "NomeTurma": "IA03-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 671,
+          "NomeTurma": "MD22-DOM812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 672,
+          "NomeTurma": "FS17-DOM812-488365 - ENCERRADA POR ATUALIZAÇÃO DE MATRÍCULA"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 677,
+          "NomeTurma": "DA12-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 681,
+          "NomeTurma": "MD23-SAB812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 682,
+          "NomeTurma": "MD24-2812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 695,
+          "NomeTurma": "IA02-61822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 709,
+          "NomeTurma": "CE02-SAB1317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 717,
+          "NomeTurma": "MD25-21822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 718,
+          "NomeTurma": "DA13-21822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 719,
+          "NomeTurma": "FS18-31822-488365 - ENCERRADA POR ATUALIZAÇÃO DE MATRIZ CURRICULAR"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 720,
+          "NomeTurma": "CE01-41822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 721,
+          "NomeTurma": "DA14-SAB1317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 722,
+          "NomeTurma": "DA15-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 723,
+          "NomeTurma": "FS19-61822-488365 - ENCERRADA POR ATUALIZAÇÃO DE MATRIZ CURRICULAR"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 724,
+          "NomeTurma": "FS20-21317-488365 - ENCERRADA POR ATUALIZAÇÃO DE MATRIZ CURRICULAR"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 725,
+          "NomeTurma": "MD26-41317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 726,
+          "NomeTurma": "MD27-51822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 727,
+          "NomeTurma": "CE03-61822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 742,
+          "NomeTurma": "MD28-35812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 769,
+          "NomeTurma": "FS17-DOM812-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 770,
+          "NomeTurma": "FS18-31822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 771,
+          "NomeTurma": "FS19-61822-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 772,
+          "NomeTurma": "FS20-21317-488365"
+        },
+        {
+          "ModalidadeID": 2,
+          "DescricaoModalidade": "Presencial",
+          "TurmaID": 778,
+          "NomeTurma": "CE02-51822-488365"
+        }
+      ]
+    }
+  }
+]

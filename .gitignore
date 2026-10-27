@@ -1,0 +1,18 @@
+# Segredos e ambiente local (nunca versionar)
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Saídas locais
+logs/*
+!logs/.gitkeep
+data/*
+!data/.gitkeep
+*.log
+*.dump
+*.bak
+
+# Editores
+.idea/
+.vscode/

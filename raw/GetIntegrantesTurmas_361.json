@@ -1,0 +1,117 @@
+[
+  {
+    "RetornoOperacao": "01 - Operação Realizada com Sucesso.",
+    "MatrizCurricularID": 0,
+    "Nome": "MD07-61822-488365",
+    "Integrantes": {
+      "Integrantes": [
+        {
+          "AlunoID": 10438,
+          "Nome": "CLAYTON NASCIMENTO PEREIRA",
+          "NumeroChamada": "5",
+          "NumeroContrato": "554/1",
+          "ModulosMatriculados": "1, 2, 3, 4",
+          "Disciplinas": {
+            "wsDisciplinas": [
+              {
+                "DisciplinaID": 197,
+                "Nome": "MD M1 U2 - Jornada do Cliente e Comportamento do Consumidor",
+                "Modulo": 1
+              },
+              {
+                "DisciplinaID": 198,
+                "Nome": "MD M1 U1 - Marketing Digital e o marketing 360º",
+                "Modulo": 1
+              },
+              {
+                "DisciplinaID": 199,
+                "Nome": "MD M1 U3 - Branding e Presença Digital",
+                "Modulo": 1
+              },
+              {
+                "DisciplinaID": 200,
+                "Nome": "MD M1 U4 - Estratégias de marketing digital",
+                "Modulo": 1
+              },
+              {
+                "DisciplinaID": 201,
+                "Nome": "MD M1 U5 - Planejamento de marketing digital",
+                "Modulo": 1
+              },
+              {
+                "DisciplinaID": 202,
+                "Nome": "MD M1 U6 - Apresentação do Trabalho de Conclusão",
+                "Modulo": 1
+              },
+              {
+                "DisciplinaID": 203,
+                "Nome": "MD M2 U1 - Planejamento de conteúdo",
+                "Modulo": 2
+              },
+              {
+                "DisciplinaID": 204,
+                "Nome": "MD M2 U2 - Branded Content",
+                "Modulo": 2
+              },
+              {
+                "DisciplinaID": 205,
+                "Nome": "MD M2 U3 - Copywriting",
+                "Modulo": 2
+              },
+              {
+                "DisciplinaID": 206,
+                "Nome": "MD M3 U1 - Design e Web Branding",
+                "Modulo": 3
+              },
+              {
+                "DisciplinaID": 207,
+                "Nome": "MD M3 U2 - Conteúdo estático, formatos e design com Canva",
+                "Modulo": 3
+              },
+              {
+                "DisciplinaID": 208,
+                "Nome": "MD M3 U3 - Conteúdo em vídeo com CapCut",
+                "Modulo": 3
+              },
+              {
+                "DisciplinaID": 209,
+                "Nome": "MD M4 U1 - Objetivos e Metas de Campanhas pagas em mídias sociais",
+                "Modulo": 4
+              },
+              {
+                "DisciplinaID": 210,
+                "Nome": "MD M4 U4 - Relatórios e Performance de Growth",
+                "Modulo": 4
+              },
+              {
+                "DisciplinaID": 211,
+                "Nome": "MD M4 U2 - Meta ADS",
+                "Modulo": 4
+              },
+              {
+                "DisciplinaID": 212,
+                "Nome": "MD M4 U3 - Google ADS",
+                "Modulo": 4
+              },
+              {
+                "DisciplinaID": 263,
+                "Nome": "MD M2 U4 - Apresentação do Trabalho de Conclusão",
+                "Modulo": 2
+              },
+              {
+                "DisciplinaID": 264,
+                "Nome": "MD M3 U4 - Apresentação do Trabalho de Conclusão",
+                "Modulo": 3
+              },
+              {
+                "DisciplinaID": 265,
+                "Nome": "MD M4 U5 - Apresentação do Trabalho de Conclusão",
+                "Modulo": 4
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]
