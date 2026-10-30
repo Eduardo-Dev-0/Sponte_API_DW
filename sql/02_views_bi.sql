@@ -10,31 +10,10 @@
 --    Dá para liberar acesso só ao schema bi, sem liberar raw, stg e dw.
 -- =====================================================================
 
-CREATE SCHEMA IF NOT EXISTS bi;
-
-DROP VIEW IF EXISTS bi.vw_alunos_por_situacao;
-DROP VIEW IF EXISTS bi.vw_cursos_comparativo;
-DROP VIEW IF EXISTS bi.vw_turmas_por_professor;
-DROP VIEW IF EXISTS bi.vw_alunos_por_turma;
-DROP VIEW IF EXISTS bi.vw_aluno_turma;
-DROP VIEW IF EXISTS bi.dim_turma;
-DROP VIEW IF EXISTS bi.dim_sede;
-DROP VIEW IF EXISTS bi.dim_aluno;
-DROP VIEW IF EXISTS bi.vw_movimento_matricula_mes;
-DROP VIEW IF EXISTS bi.vw_pendencias_sponte;
-DROP VIEW IF EXISTS bi.vw_cobertura_frequencia;
-DROP VIEW IF EXISTS bi.vw_calendario_frequencia;
-DROP VIEW IF EXISTS bi.vw_frequencia_aluno_dia;
-DROP VIEW IF EXISTS bi.vw_frequencia_curso;
-DROP VIEW IF EXISTS bi.vw_frequencia_turma;
-DROP VIEW IF EXISTS bi.dim_data;
-DROP VIEW IF EXISTS bi.vw_dias_sem_aula;
-DROP VIEW IF EXISTS bi.vw_calendario_divergencias;
-DROP VIEW IF EXISTS bi.vw_calendario_turma_mes;
-DROP VIEW IF EXISTS bi.vw_frequencia_curso_mes;
-DROP VIEW IF EXISTS bi.vw_frequencia_aluno;
-DROP VIEW IF EXISTS bi.vw_frequencia_aluno_mes;
-DROP VIEW IF EXISTS bi.vw_frequencia_turma_mes;
+-- Recria o schema inteiro: evita erro de ordem entre views que dependem umas das outras
+-- (nenhum dado fica no schema bi; são só views e funções).
+DROP SCHEMA IF EXISTS bi CASCADE;
+CREATE SCHEMA bi;
 
 -- Nome do mês em português (não depende do idioma do servidor)
 CREATE OR REPLACE FUNCTION bi.mes_nome(d date) RETURNS text LANGUAGE sql IMMUTABLE AS $$

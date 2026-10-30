@@ -85,27 +85,33 @@ JOIN raw.carga_frequencia c USING (carga_freq_id)
 WHERE c.status = 'ok'
 ORDER BY c.cod_cliente, j.turma_id, j.mes, j.carga_freq_id DESC;
 
-CREATE OR REPLACE VIEW stg.frequencia_aluno AS
-SELECT ja.cod_cliente, f.turma_id, f.mes, f.disciplina_id, f.aluno_id,
-       f.payload->>'NomeDisciplina'                  AS disciplina,
-       (f.payload->>'Modulo')::int                   AS modulo,
-       (f.payload->>'TotalPresencas')::int           AS presencas,
-       (f.payload->>'TotalFaltas')::int              AS faltas,
-       f.payload->>'HorasAssistidas'                 AS horas_assistidas,
-       f.payload->>'HorasFaltas'                     AS horas_faltas,
-       f.payload->>'PercentualFrequencia'            AS percentual_api
+-- Última observação de cada aluno em cada turma, mês e disciplina. A API só lista quem está na turma no momento
+-- da consulta: quem saiu deixa de aparecer nas consultas seguintes, e continua valendo pela última vez em que foi visto.
+CREATE OR REPLACE VIEW stg.frequencia_obs AS
+SELECT DISTINCT ON (c.cod_cliente, f.turma_id, f.mes, f.disciplina_id, f.aluno_id)
+       c.cod_cliente, f.carga_freq_id, f.turma_id, f.mes, f.disciplina_id, f.aluno_id, f.payload
 FROM raw.frequencia f
-JOIN stg.frequencia_janela_atual ja
-  ON ja.carga_freq_id = f.carga_freq_id AND ja.turma_id = f.turma_id AND ja.mes = f.mes;
+JOIN raw.carga_frequencia c USING (carga_freq_id)
+WHERE c.status = 'ok'
+ORDER BY c.cod_cliente, f.turma_id, f.mes, f.disciplina_id, f.aluno_id, f.carga_freq_id DESC;
+
+CREATE OR REPLACE VIEW stg.frequencia_aluno AS
+SELECT o.cod_cliente, o.turma_id, o.mes, o.disciplina_id, o.aluno_id,
+       o.payload->>'NomeDisciplina'                  AS disciplina,
+       (o.payload->>'Modulo')::int                   AS modulo,
+       (o.payload->>'TotalPresencas')::int           AS presencas,
+       (o.payload->>'TotalFaltas')::int              AS faltas,
+       o.payload->>'HorasAssistidas'                 AS horas_assistidas,
+       o.payload->>'HorasFaltas'                     AS horas_faltas,
+       o.payload->>'PercentualFrequencia'            AS percentual_api
+FROM stg.frequencia_obs o;
 
 CREATE OR REPLACE VIEW stg.falta AS
-SELECT ja.cod_cliente, f.turma_id, f.mes, f.disciplina_id, f.aluno_id,
+SELECT o.cod_cliente, o.turma_id, o.mes, o.disciplina_id, o.aluno_id,
        stg.parse_data(x->>'DataAula') AS data_aula
-FROM raw.frequencia f
-JOIN stg.frequencia_janela_atual ja
-  ON ja.carga_freq_id = f.carga_freq_id AND ja.turma_id = f.turma_id AND ja.mes = f.mes
+FROM stg.frequencia_obs o
 CROSS JOIN LATERAL jsonb_array_elements(
-    CASE WHEN jsonb_typeof(f.payload->'Faltas') = 'array' THEN f.payload->'Faltas' ELSE '[]'::jsonb END) AS x;
+    CASE WHEN jsonb_typeof(o.payload->'Faltas') = 'array' THEN o.payload->'Faltas' ELSE '[]'::jsonb END) AS x;
 
 CREATE OR REPLACE VIEW stg.aula AS
 SELECT ja.cod_cliente, d.turma_id, d.mes, d.disciplina_id,

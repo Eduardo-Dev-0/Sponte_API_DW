@@ -7,6 +7,7 @@ Uso:
     python src/carga_frequencia.py --completa        # recarrega todos os meses desde o início das turmas
     python src/carga_frequencia.py --turma 436       # só uma turma
     python src/carga_frequencia.py --so-processar    # recalcula o dw com o que já está no raw (sem API)
+    python src/carga_frequencia.py --param-extra "Nome=valor"   # parâmetro de busca extra (ver abaixo)
 
 Regras:
   * Turmas Vigente, mais as que tiveram aula nos últimos 45 dias (para fechar o último mês depois que
@@ -20,10 +21,12 @@ Regras:
     mês, nos últimos 120 dias, que ainda tenha aula não concluída ou dia de falta parcial (o acadêmico
     conclui aulas e corrige faltas depois). Alteração em mês antigo e sem pendência só entra com
     --completa, que vale rodar de tempos em tempos (por exemplo, uma vez por semana).
-  * Alunos que já saíram da turma: a consulta normal só devolve quem está na turma agora. Para cada mês, os
-    alunos com matrícula naquele mês que não vieram na resposta são pedidos um a um (AlunoID=), para que a
-    frequência de quem passou pela turma continue contando no mês em que estava matriculado. Janelas
-    consultadas sem isso (cargas antigas) são reconsultadas uma vez. --sem-ex-alunos desliga esse passo.
+  * Alunos que já saíram da turma: a consulta normal só devolve quem está na turma agora, e o filtro AlunoID
+    também não devolve quem saiu (testado com src/sonda_ex_alunos.py). Para não perder o que já foi
+    consultado, o dw usa a última observação de cada aluno em cada mês, mesmo que o aluno tenha deixado de
+    aparecer nas consultas seguintes (ver docs/FREQUENCIA.md). Se a documentação do Sponte ou a sonda
+    encontrar um parâmetro de busca que traga esses alunos, use --param-extra "Nome=valor": ele é
+    acrescentado a toda consulta e as janelas antigas são reconsultadas uma vez.
   * Só ficam no raw os campos necessários: sem nome de aluno, nome de professor ou conteúdo de aula.
 """
 import sys
@@ -91,11 +94,11 @@ def ler_turmas(cur, so_turma):
     return [dict(turma_id=r[0], data_inicio=r[1]) for r in cur.fetchall() if so_turma in (None, r[0])]
 
 
-def janelas_a_consultar(cur, turmas, hoje, recarregar, completa, mais_antigo):
+def janelas_a_consultar(cur, turmas, hoje, recarregar, completa, mais_antigo, exigir_extra=False):
     cur.execute(
         "SELECT j.turma_id, j.mes FROM raw.frequencia_janela j "
         "JOIN raw.carga_frequencia c USING (carga_freq_id) WHERE c.cod_cliente = %s AND c.status = 'ok' "
-        "AND j.ex_alunos", (COD,))
+        + ("AND j.ex_alunos" if exigir_extra else ""), (COD,))
     ja = {(r[0], r[1]) for r in cur.fetchall()}
     # meses com pendência recente: a correção feita no Sponte só aparece se o mês for reconsultado
     cur.execute(
@@ -150,24 +153,17 @@ def _ler_resposta(resp, tid, mes, linhas, discs):
     return alunos
 
 
-def buscar_janela(client, tid, mes, fim, candidatos=()):
+def buscar_janela(client, tid, mes, fim, extra=""):
     """Frequência do mês (todas as disciplinas) e as aulas do diário de cada disciplina.
 
-    Devolve (linhas, aulas, pedidos, retornados). `candidatos` são os alunos com matrícula no mês; os que não
-    vieram na consulta normal (já saíram da turma) são pedidos um a um.
+    `extra` é um parâmetro de busca opcional acrescentado à consulta (por exemplo, "Nome=1").
     """
     janela = f"Data={mes:%Y/%m/%d} e {fim:%Y/%m/%d}"
+    filtro = f"{extra};{janela}" if extra else janela
     resp = com_retentativas(lambda: client.service.GetFrequenciaTurma(
-        nCodigoCliente=COD, sToken=TOKEN, nTurmaID=tid, sParametrosBusca=janela))
+        nCodigoCliente=COD, sToken=TOKEN, nTurmaID=tid, sParametrosBusca=filtro))
     linhas, discs = [], {}
-    presentes = _ler_resposta(resp, tid, mes, linhas, discs)
-    pedidos = retornados = 0
-    for aid in sorted(set(candidatos) - presentes):
-        pedidos += 1
-        r = com_retentativas(lambda: client.service.GetFrequenciaTurma(
-            nCodigoCliente=COD, sToken=TOKEN, nTurmaID=tid, sParametrosBusca=f"AlunoID={aid};{janela}"))
-        if aid in _ler_resposta(r, tid, mes, linhas, discs):
-            retornados += 1
+    _ler_resposta(resp, tid, mes, linhas, discs)
     aulas = []
     for did, d in discs.items():
         r = com_retentativas(lambda: client.service.GetDiarioAulas(
@@ -179,25 +175,7 @@ def buscar_janela(client, tid, mes, fim, candidatos=()):
                 p = {k: x.get(k) for k in CAMPOS_AULA}
                 p["Modulo"] = d.get("Modulo")
                 aulas.append((tid, mes, did, p))
-    return linhas, aulas, pedidos, retornados
-
-
-def ler_matriculas(cur, turmas):
-    """Por turma: (aluno, início, encerramento) de todas as matrículas, inclusive as que já saíram."""
-    cur.execute(
-        "SELECT turma_id, aluno_id, min(data_inicio), "
-        "       CASE WHEN bool_or(data_encerramento IS NULL) THEN NULL ELSE max(data_encerramento) END "
-        "FROM dw.fato_matricula WHERE cod_cliente = %s AND turma_id = ANY(%s) GROUP BY turma_id, aluno_id",
-        (COD, [t["turma_id"] for t in turmas]))
-    out = {}
-    for tid, aid, ini, enc in cur.fetchall():
-        out.setdefault(tid, []).append((aid, ini, enc))
-    return out
-
-
-def candidatos(matr, tid, mes, fim):
-    """Alunos com matrícula ativa em algum dia de [mes, fim]."""
-    return [aid for aid, ini, enc in matr.get(tid, []) if (ini is None or ini <= fim) and (enc is None or enc >= mes)]
+    return linhas, aulas
 
 
 def processar(conn):
@@ -228,35 +206,31 @@ def coletar_e_gravar(conn, argv):
     so_turma = int(argv[argv.index("--turma") + 1]) if "--turma" in argv else None
     recarregar = int(argv[argv.index("--recarregar") + 1]) if "--recarregar" in argv else RECARGA_PADRAO
     completa = "--completa" in argv
-    sem_ex = "--sem-ex-alunos" in argv
+    extra = argv[argv.index("--param-extra") + 1] if "--param-extra" in argv else ""
     hoje = date.today()
 
     with conn, conn.cursor() as cur:
         turmas = ler_turmas(cur, so_turma)
-        matr = {} if sem_ex else ler_matriculas(cur, turmas)
         cur.execute("SELECT DISTINCT ON (j.turma_id) j.turma_id, j.mes, j.n_aulas FROM raw.frequencia_janela j "
                     "JOIN raw.carga_frequencia c USING (carga_freq_id) "
                     "WHERE c.cod_cliente = %s AND c.status = 'ok' "
                     "ORDER BY j.turma_id, j.mes, j.carga_freq_id DESC", (COD,))
         mais_antigo = {r[0]: (r[1], r[2]) for r in cur.fetchall()}   # mês mais antigo já consultado e nº de aulas
-        janelas = janelas_a_consultar(cur, turmas, hoje, recarregar, completa, mais_antigo)
+        janelas = janelas_a_consultar(cur, turmas, hoje, recarregar, completa, mais_antigo, bool(extra))
         cur.execute("INSERT INTO raw.carga_frequencia (cod_cliente) VALUES (%s) RETURNING carga_freq_id", (COD,))
         carga_id = cur.fetchone()[0]
     print(f"Carga de frequência {carga_id} | {len(turmas)} turmas | {len(janelas)} turma-mês a consultar")
 
     client = Client(WSDL)
     j_rows, f_rows, a_rows, falhas = [], [], [], []
-    ex_pedidos = ex_retornados = 0
     for n, (tid, mes, fim) in enumerate(janelas, 1):
         try:
-            linhas, aulas, ped, ret = buscar_janela(client, tid, mes, fim, candidatos(matr, tid, mes, fim))
-            ex_pedidos += ped
-            ex_retornados += ret
+            linhas, aulas = buscar_janela(client, tid, mes, fim, extra)
         except Exception as e:
             falhas.append((tid, f"{mes:%Y-%m}", f"{type(e).__name__}: {e}"[:150]))
             print(f"  turma {tid} {mes:%Y-%m}: ERRO {type(e).__name__}")
             continue
-        j_rows.append((carga_id, tid, mes, mes, fim, len(linhas), len(aulas), not sem_ex))
+        j_rows.append((carga_id, tid, mes, mes, fim, len(linhas), len(aulas), bool(extra)))
         f_rows += [(carga_id, t, m, d, a, Json(p, dumps=dumps)) for t, m, d, a, p in linhas]
         a_rows += [(carga_id, t, m, d, Json(p, dumps=dumps)) for t, m, d, p in aulas]
         if n % 20 == 0 or n == len(janelas):
@@ -273,14 +247,11 @@ def coletar_e_gravar(conn, argv):
             mes_ant = primeiro_dia(mes_ant - timedelta(days=1))
             fim_ant = proximo_mes(mes_ant) - timedelta(days=1)
             try:
-                linhas, aulas, ped, ret = buscar_janela(client, tid, mes_ant, fim_ant,
-                                                        candidatos(matr, tid, mes_ant, fim_ant))
-                ex_pedidos += ped
-                ex_retornados += ret
+                linhas, aulas = buscar_janela(client, tid, mes_ant, fim_ant, extra)
             except Exception as e:
                 falhas.append((tid, f"{mes_ant:%Y-%m}", f"{type(e).__name__}: {e}"[:150]))
                 break
-            j_rows.append((carga_id, tid, mes_ant, mes_ant, fim_ant, len(linhas), len(aulas), not sem_ex))
+            j_rows.append((carga_id, tid, mes_ant, mes_ant, fim_ant, len(linhas), len(aulas), bool(extra)))
             f_rows += [(carga_id, t_, m_, d_, a_, Json(p_, dumps=dumps)) for t_, m_, d_, a_, p_ in linhas]
             a_rows += [(carga_id, t_, m_, d_, Json(p_, dumps=dumps)) for t_, m_, d_, p_ in aulas]
             n = len(aulas)
@@ -302,11 +273,6 @@ def coletar_e_gravar(conn, argv):
                     ("ok" if ok else "erro",
                      f"janelas={len(j_rows)} linhas={len(f_rows)} aulas={len(a_rows)} falhas={falhas[:10]}", carga_id))
     print(f"raw gravado: {len(j_rows)} turma-mês, {len(f_rows)} linhas de aluno, {len(a_rows)} aulas")
-    if ex_pedidos:
-        print(f"alunos que já saíram da turma: {ex_pedidos} consultas, {ex_retornados} com frequência devolvida pela API")
-        if ex_retornados == 0:
-            print("AVISO: a API não devolveu a frequência de nenhum aluno que saiu da turma pelo filtro AlunoID. "
-                  "Rode src/sonda_ex_alunos.py e envie a saída. Para não repetir essas consultas, use --sem-ex-alunos.")
     if falhas:
         print(f"AVISO: {len(falhas)} turma-mês falharam e serão tentados de novo na próxima carga: {falhas[:5]}")
     if janelas and not j_rows:

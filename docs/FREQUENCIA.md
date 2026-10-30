@@ -74,15 +74,23 @@ Resumo de `qualidade_frequencia.sql`: 6 dias parciais; 1.105 horas de aulas pass
 
 ## Alunos que passaram pela turma
 
-A consulta normal do `GetFrequenciaTurma` só lista quem está na turma **agora** (no Sponte, é como deixar desmarcada a caixa de mostrar os alunos que passaram pela turma). Quem saiu (cancelamento, trancamento, transferência) some dos meses em que ainda estava matriculado, e a frequência do mês fica sem eles.
+**O problema.** A consulta normal do `GetFrequenciaTurma` só lista quem está na turma **agora** (no Sponte, é como deixar desmarcada a caixa de mostrar os alunos que passaram pela turma). Quem saiu (cancelamento, trancamento, transferência) some dos meses em que ainda estava matriculado. Exemplo: a DA09 tinha 25 alunos em maio, e o DW mostra 16.
 
-Correção na carga: para cada turma e mês, os alunos com matrícula naquele mês que **não vieram** na resposta normal são pedidos um a um, com o filtro `AlunoID` (`sParametrosBusca=AlunoID=<id>;Data=...`), e entram na frequência do mês. O limite deles é o período da matrícula: contam do início até a **data de encerramento** da matrícula (a última aula deles na turma).
+**O que foi testado.**
+- O filtro `AlunoID` **não** devolve quem saiu (`sonda_ex_alunos.py`: 6 consultados, 0 devolvidos).
+- Na documentação do Sponte não existe método nem parâmetro para isso. O `GetFrequenciaTurma` é o único método com faltas por data. O boletim (`GetBoletim`, `GetBoletim2`, `GetBoletim3`) traz **totais** de frequência e faltas por aluno e período, sem dia nem mês. A agenda do aluno (`GetAgendaAluno`) lista as aulas, sem as faltas.
 
-- O filtro `AlunoID` não é documentado como forma de trazer quem saiu. Antes de confiar, rode `python src/sonda_ex_alunos.py --turma 623 --mes 2026-05`: ela diz se a API devolve a frequência desses alunos (SIM ou NÃO).
-- As janelas consultadas antes desta correção são reconsultadas sozinhas, uma vez (a primeira carga fica mais longa). `--sem-ex-alunos` desliga esse passo.
-- Conferência: a consulta 11 de `sql/consultas/qualidade_frequencia.sql` compara, por turma e mês, as matrículas com algum dia no mês e os alunos que aparecem na frequência.
-- Se a carga avisar que a API não devolveu nenhum aluno que saiu, o filtro `AlunoID` não resolve e é preciso outro caminho.
-- Se o aluno parou de vir antes do cancelamento, os dias até a data de encerramento contam como falta dele.
+**O que o DW faz agora.**
+- **Última observação.** Para cada aluno, turma, mês e disciplina vale a última vez em que a API o listou (`stg.frequencia_obs`). Quem sair depois de ter sido consultado continua contando nos meses em que estava matriculado, até a data de encerramento da matrícula.
+- **Limite.** Quem saiu **antes** da primeira carga de frequência (out/2026) nunca foi visto pelo DW, e a API não devolve esses dados. Por isso os meses antigos têm menos alunos do que no Sponte.
+- `--param-extra "Nome=valor"` acrescenta um parâmetro de busca a toda consulta, caso a sonda ou a documentação ache um que traga esses alunos. As janelas antigas são reconsultadas uma vez.
+
+**Testes finais** (`python src/sonda_ex_alunos.py --turma 623 --mes 2026-05`):
+- **C:** 20 parâmetros de busca não documentados, para ver se algum traz mais alunos (por exemplo, o equivalente da caixa do Sponte).
+- **D:** o boletim (`GetBoletim3`) de alunos que saíram: se devolve totais para eles.
+- **E:** a agenda (`GetAgendaAluno`) deles: se lista as aulas do período.
+
+**Se nenhum caminho da API funcionar:** exportar do Sponte o relatório de frequência da turma com a caixa dos alunos que passaram marcada, e importar no DW (preciso de um exemplo do arquivo); ou usar só os totais do boletim, sem detalhe por dia.
 
 ## Para o Power BI
 
@@ -128,7 +136,7 @@ Na falta parcial, a linha mostra a disciplina em que a falta foi lançada. Se o 
 ## Em aberto
 
 - [x] Primeira carga real e leitura de `bi.vw_calendario_divergencias`
-- [ ] Confirmar com `sonda_ex_alunos.py` que a API devolve a frequência de quem saiu da turma pelo `AlunoID`
+- [ ] Frequência de quem saiu da turma antes da primeira carga: depende dos testes finais (`sonda_ex_alunos.py`) ou de importar o relatório do Sponte
 - [ ] 13 casos em que `TotalFaltas` da API difere das faltas listadas (consulta 9 de `qualidade_frequencia.sql`)
 - [ ] 1.105 horas de aulas passadas não concluídas: quanto é aula paralela que não aconteceu e quanto é diário sem fechamento (consultas 7 e 8)
 - [ ] Significado exato de "Confirmada" (aula não realizada ou diário sem fechamento) e quantas ficaram assim
