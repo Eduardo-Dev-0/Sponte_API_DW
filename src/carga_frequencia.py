@@ -10,8 +10,9 @@ Uso:
     python src/carga_frequencia.py --param-extra "Nome=valor"   # parâmetro de busca extra (ver abaixo)
 
 Regras:
-  * Turmas Vigente, mais as que tiveram aula nos últimos 45 dias (para fechar o último mês depois que
-    deixam de ser Vigente).
+  * Turmas Vigente e Aberta (a Aberta que já começou ou começa em até 31 dias: no início de uma turma as
+    primeiras aulas acontecem com ela ainda aberta), mais as que tiveram aula nos últimos 45 dias (para
+    fechar o último mês depois que deixam de ser Vigente).
   * Janela = um mês de calendário (o mês corrente vai até ontem). Cada mês é independente: se uma
     consulta falhar, as outras são gravadas e a que falhou é tentada de novo na próxima carga.
   * Cada turma é carregada desde a primeira aula: começa um mês antes do início cadastrado da turma (ou
@@ -85,12 +86,21 @@ def com_retentativas(fn, tentativas=3):
 
 
 def ler_turmas(cur, so_turma):
+    """Turmas Vigente e Aberta, mais as que tiveram aula nos últimos 45 dias.
+
+    No início de uma turma, as primeiras aulas acontecem com ela ainda Aberta: a Aberta entra se já começou ou
+    começa em até 31 dias (início = o mais cedo entre o início da turma e a primeira matrícula).
+    """
     cur.execute(
-        "SELECT t.turma_id, LEAST(t.data_inicio, (SELECT min(m.data_inicio) FROM dw.fato_matricula m "
-        "    WHERE m.cod_cliente = t.cod_cliente AND m.turma_id = t.turma_id)) AS inicio FROM dw.dim_turma t "
-        "WHERE t.cod_cliente = %s AND (lower(t.situacao) = 'vigente' OR t.turma_id IN ("
-        "    SELECT turma_id FROM dw.fato_aula_dia WHERE cod_cliente = %s AND data_aula >= current_date - 45)) "
-        "ORDER BY t.turma_id", (COD, COD))
+        "SELECT x.turma_id, x.inicio FROM ("
+        "  SELECT t.turma_id, t.situacao, LEAST(t.data_inicio, (SELECT min(m.data_inicio) FROM dw.fato_matricula m "
+        "      WHERE m.cod_cliente = t.cod_cliente AND m.turma_id = t.turma_id)) AS inicio "
+        "  FROM dw.dim_turma t WHERE t.cod_cliente = %s) x "
+        "WHERE lower(x.situacao) = 'vigente' "
+        "   OR (lower(x.situacao) = 'aberta' AND (x.inicio IS NULL OR x.inicio <= current_date + 31)) "
+        "   OR x.turma_id IN (SELECT turma_id FROM dw.fato_aula_dia WHERE cod_cliente = %s "
+        "                     AND data_aula >= current_date - 45) "
+        "ORDER BY x.turma_id", (COD, COD))
     return [dict(turma_id=r[0], data_inicio=r[1]) for r in cur.fetchall() if so_turma in (None, r[0])]
 
 

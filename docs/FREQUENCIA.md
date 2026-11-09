@@ -26,7 +26,7 @@ Estado: **em uso: a primeira carga real foi feita em out/2026** (`python src/car
 
 ## Como funciona a carga
 
-- Turmas Vigente, mais as que tiveram aula nos últimos 45 dias (para fechar o último mês).
+- Turmas **Vigente e Aberta** (a Aberta que já começou ou começa em até 31 dias, porque no início de uma turma as primeiras aulas acontecem com ela ainda aberta), mais as que tiveram aula nos últimos 45 dias (para fechar o último mês).
 - **Histórico completo, da primeira aula concluída até a última.** Cada turma começa um mês antes do início cadastrado (ou da primeira matrícula, o que for mais cedo) e, se o mês mais antigo tiver aula, a carga volta mais um mês, até achar um mês sem aula (limite de jan/2024). `bi.vw_cobertura_frequencia` confirma por turma: `meses_faltando` deve ser 0 e `cobertura_inicio` deve ser `completa`.
 - Um mês de calendário por consulta (o mês corrente vai até ontem). Meses fechados são consultados uma vez. São reconsultados a cada carga **os 2 últimos meses** e **qualquer mês, nos últimos 120 dias, com aula não concluída ou dia de falta parcial**, porque o acadêmico conclui aulas e corrige faltas depois. Alteração em mês antigo e sem pendência só entra com `--completa`. O que atualiza e quando: [ATUALIZACAO.md](ATUALIZACAO.md).
 - Cada turma-mês é independente: se uma consulta falhar, as outras são gravadas e a que falhou é tentada de novo na próxima carga.
